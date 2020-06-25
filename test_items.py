@@ -1,17 +1,20 @@
-from selenium import webdriver
-import pytest
 import time
 
+link = 'http://selenium1py.pythonanywhere.com/catalogue/coders-at-work_207/'
 
-browser = webdriver.Chrome()
 
-@pytest.mark.xfail
-@pytest.mark.parametrize()
-def test_languages():
-    browser.get('http://selenium1py.pythonanywhere.com/ru/catalogue/coders-at-work_207/')
-    button = browser.find_element_by_css_selector('btn.btn-lg.btn-primary.btn-add-to-basket')
-    button.click()
-    browser.implicitly_wait(1)
-    message = browser.find_element_by_class_name("alertinner")
+class TestProductPage:
 
-    assert "был добавлен в вашу корзину." in message.text
+    def test_button_add_to_basket_is_visible(self, browser):
+        """Тест проверяет, что страница товара
+         содержит кнопку добавления в корзину
+        """
+        # Открываем страницу товара
+        browser.get(link)
+
+        # Установлено время принудительной задержки браузера
+        # после открытия страницы, для визуальной проверки языка открытой страницы
+        time.sleep(5)
+
+        # Проверяем наличие кнопки добавления товара в корзину
+        assert browser.find_element_by_css_selector("button.btn-add-to-basket")
